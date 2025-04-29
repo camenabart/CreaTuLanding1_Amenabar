@@ -1,0 +1,29 @@
+/* Diseño temporal de mi web*/
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .producto {
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .producto button {
+      background-color: #5cb85c;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .producto button:hover {
+      background-color: #4cae4c;
+    }
+    #carrito {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f8f8f8;
+    }
+
+    
