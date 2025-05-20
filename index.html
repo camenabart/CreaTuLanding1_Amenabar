@@ -1,28 +1,352 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>El Tineo</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>El Tineo - Flores</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <header class="text-center py-4">
-    <img src="./img/logo.jpg" alt="El Tineo" class="img-fluid" width="150">
-  </header>
 
-  <h1>El Tineo</h1>
-  <p>Flores frescas para cada ocasión</p>
+<header>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="./img/logo-01.png" alt="El Tineo" width="150" />
+    </div>
+    <button class="menu-hamburguesa" onclick="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#quienes-somos">Historia</a></li>
+      <li><a href="#productos">Nuestros productos</a></li>
+      <li><a href="#actividades">Actividades</a></li>
+      <li><a href="#ofertas">Ofertas</a></li>
+    </ul>
+    <div class="carrito-icon" onclick="toggleCarrito()">
+      <i class="fas fa-shopping-cart"></i>
+      <span id="carrito-count">0</span>
+    </div>
+  </nav>
+</header>
 
-  <h2>Nuestros productos:</h2>
-  <div id="productos">
+<section class="portada">
+  <img src="./img/portada.jpeg" alt="Flores frescas en El Tineo" />
+  <div class="texto-portada">
+    <h1>Bienvenidos al Tineo</h1>
+    <p>Un espacio de encuentro</p>
+  </div>
+</section>
+
+<section id="quienes-somos" class="quienes-somos">
+  <div class="quienes-somos-content">
+  
+    <div class="quienes-somos-info">
+  
+      <div class="quienes-somos-texto">
+        <h2>Un lugar lleno de recuerdos</h2>
+        <p>El Tineo es más que una floristería, es un espacio donde la naturaleza y la creatividad se encuentran. Desde 2010, hemos estado trayendo alegría y belleza a través de nuestras flores y artesanías.</p>
+        <p>Nuestro compromiso es ofrecer productos de la más alta calidad, con un servicio personalizado y una atención al detalle que nos caracteriza.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <main>
+    <section id="actividades" class="actividades">
+      <div class="actividades-content">
+        <h2>Actividades en El Tineo</h2>
+        <div class="carousel-container">
+          <button class="carousel-button prev" onclick="moverCarousel(-1)">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          
+          <div class="carousel-wrapper">
+            <div class="carousel-track">
+              <div class="actividad-card">
+                <img src="./img/miel.jpg" alt="Cosecha de Miel" />
+                <div class="actividad-info">
+                  <h3>Cosecha de Miel</h3>
+                  <p>Aprende sobre el fascinante mundo de las abejas y la producción de miel natural. Incluye demostración de extracción y degustación.</p>
+                  <div class="actividad-detalles">
+                    <span><i class="far fa-clock"></i> 2 horas</span>
+                    <span><i class="fas fa-users"></i> Máx. 10 personas</span>
+                  </div>
+                  <div class="actividad-fecha">
+                    <span><i class="far fa-calendar-alt"></i> 15 de Abril, 2024</span>
+                    <span><i class="far fa-clock"></i> 10:00 AM</span>
+                  </div>
+                  <div class="actividad-botones">
+                    <button class="btn-ver-mas" onclick="verMasActividad('Cosecha de Miel', 'Aprende sobre el fascinante mundo de las abejas y la producción de miel natural. Incluye demostración de extracción y degustación.', '2 horas', '10 personas', '15 de Abril, 2024', '10:00 AM', 'img/miel.jpg')">
+                      <i class="fas fa-info-circle"></i> Ver más
+                    </button>
+                    <button class="btn-actividad" onclick="abrirModalReserva('Cosecha de Miel')">
+                      <i class="fas fa-calendar-check"></i> Reservar
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="actividad-card">
+                <img src="./img/tejido.png" alt="Taller de Tejido" />
+                <div class="actividad-info">
+                  <h3>Taller de Tejido</h3>
+                  <p>Descubre el arte del tejido a mano. Aprende técnicas básicas y crea tu propia pieza artesanal.</p>
+                  <div class="actividad-detalles">
+                    <span><i class="far fa-clock"></i> 3 horas</span>
+                    <span><i class="fas fa-users"></i> Máx. 8 personas</span>
+                  </div>
+                  <div class="actividad-fecha">
+                    <span><i class="far fa-calendar-alt"></i> 20 de Abril, 2024</span>
+                    <span><i class="far fa-clock"></i> 2:00 PM</span>
+                  </div>
+                  <div class="actividad-botones">
+                    <button class="btn-ver-mas" onclick="verMasActividad('Taller de Tejido', 'Descubre el arte del tejido a mano. Aprende técnicas básicas y crea tu propia pieza artesanal.', '3 horas', '8 personas', '20 de Abril, 2024', '2:00 PM', 'img/tejido.png')">
+                      <i class="fas fa-info-circle"></i> Ver más
+                    </button>
+                    <button class="btn-actividad" onclick="abrirModalReserva('Taller de Tejido')">
+                      <i class="fas fa-calendar-check"></i> Reservar
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="actividad-card">
+                <img src="./img/jardineria.png" alt="Taller de Jardinería" />
+                <div class="actividad-info">
+                  <h3>Taller de Jardinería</h3>
+                  <p>Aprende a crear y mantener tu propio jardín. Incluye técnicas de cultivo y cuidado de plantas.</p>
+                  <div class="actividad-detalles">
+                    <span><i class="far fa-clock"></i> 2.5 horas</span>
+                    <span><i class="fas fa-users"></i> Máx. 12 personas</span>
+                  </div>
+                  <div class="actividad-fecha">
+                    <span><i class="far fa-calendar-alt"></i> 25 de Abril, 2024</span>
+                    <span><i class="far fa-clock"></i> 11:00 AM</span>
+                  </div>
+                  <div class="actividad-botones">
+                    <button class="btn-ver-mas" onclick="verMasActividad('Taller de Jardinería', 'Aprende a crear y mantener tu propio jardín. Incluye técnicas de cultivo y cuidado de plantas.', '2.5 horas', '12 personas', '25 de Abril, 2024', '11:00 AM', 'img/jardineria.png')">
+                      <i class="fas fa-info-circle"></i> Ver más
+                    </button>
+                    <button class="btn-actividad" onclick="abrirModalReserva('Taller de Jardinería')">
+                      <i class="fas fa-calendar-check"></i> Reservar
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="actividad-card">
+                <img src="./img/arreglos.jpg" alt="Taller de Arreglos Florales" />
+                <div class="actividad-info">
+                  <h3>Taller de Arreglos Florales</h3>
+                  <p>Crea hermosos arreglos florales con nuestras flores frescas. Aprende técnicas profesionales.</p>
+                  <div class="actividad-detalles">
+                    <span><i class="far fa-clock"></i> 2 horas</span>
+                    <span><i class="fas fa-users"></i> Máx. 10 personas</span>
+                  </div>
+                  <div class="actividad-fecha">
+                    <span><i class="far fa-calendar-alt"></i> 30 de Abril, 2024</span>
+                    <span><i class="far fa-clock"></i> 3:00 PM</span>
+                  </div>
+                  <div class="actividad-botones">
+                    <button class="btn-ver-mas" onclick="verMasActividad('Taller de Arreglos Florales', 'Crea hermosos arreglos florales con nuestras flores frescas. Aprende técnicas profesionales.', '2 horas', '10 personas', '30 de Abril, 2024', '3:00 PM', 'img/arreglos.jpg')">
+                      <i class="fas fa-info-circle"></i> Ver más
+                    </button>
+                    <button class="btn-actividad" onclick="abrirModalReserva('Taller de Arreglos Florales')">
+                      <i class="fas fa-calendar-check"></i> Reservar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="carousel-button next" onclick="moverCarousel(1)">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+        
+        <div class="carousel-dots">
+          <span class="dot active" onclick="irASlide(0)"></span>
+          <span class="dot" onclick="irASlide(2)"></span>
+        </div>
+      </div>
+    </section>
+
+    <h2 id="productos">Nuestros productos</h2>
+    
+    <section id="filtros-busqueda">
+      <div class="filtros-container">
+        <div class="buscador-wrapper">
+          <div class="buscador-input">
+            <i class="fas fa-search"></i>
+            <input type="text" id="buscador" placeholder="Buscar por nombre..." />
+            <button type="button" onclick="buscar()">
+              <i class="fas fa-search"></i>
+              Buscar
+            </button>
+          </div>
+        </div>
+
+        <button class="btn-hamburguesa" onclick="toggleFiltros()">
+          <i class="fas fa-bars"></i> Filtros
+        </button>
+
+        <div class="filtros-wrapper" id="filtros-mobile">
+          <div class="categorias-botones">
+            <button type="button" onclick="filtrarPorCategoria('flores')" class="btn-categoria">
+              <i class="fas fa-seedling"></i> Flores
+            </button>
+            <button type="button" onclick="filtrarPorCategoria('artesania')" class="btn-categoria">
+              <i class="fas fa-paint-brush"></i> Artesanía
+            </button>
+            <button type="button" onclick="filtrarPorCategoria('ofertas')" class="btn-categoria">
+              <i class="fas fa-tag"></i> Ofertas
+            </button>
+            <button type="button" onclick="mostrarTodos()" class="btn-mostrar-todos">
+              <i class="fas fa-th-large"></i>
+              Mostrar todos
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="lista-productos"></div>
+
+    <section id="carrito">
+      <div class="carrito-header">
+        <h2><i class="fas fa-shopping-cart"></i> Tu carrito</h2>
+        <button class="btn-cerrar-carrito" onclick="toggleCarrito()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <p id="carrito-vacio">Tu carrito está vacío.</p>
+      <ul id="lista-carrito"></ul>
+      <div class="carrito-footer">
+        <p id="total-carrito">Total: $0</p>
+        <div class="carrito-botones">
+          <button id="btn-vaciar" onclick="vaciarCarrito()">
+            <i class="fas fa-trash"></i> Vaciar carrito
+          </button>
+          <button id="btn-descuento">
+            <i class="fas fa-percent"></i> Aplicar descuento
+          </button>
+          <button id="btn-pagar" onclick="irAPagar()" style="display: none;">
+            <i class="fas fa-credit-card"></i> Ir a pagar
+          </button>
+        </div>
+      </div>
+      <p id="mensaje-carrito" class="mensaje"></p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <img src="./img/logo-06.png" alt="El Tineo" width="120" class="footer-logo" />
+        <h3>El Tineo</h3>
+        <p>Flores con amor</p>
+      </div>
+      <div class="footer-section">
+        <h3>Contacto</h3>
+        <p><i class="fas fa-phone"></i> +56 9 1234 5678</p>
+        <p><i class="fas fa-envelope"></i> contacto@eltineo.cl</p>
+      </div>
+      <div class="footer-section">
+        <h3>Síguenos</h3>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 El Tineo - Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+  <!-- Modal de Reserva -->
+  <div id="modal-reserva" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Reservar Actividad</h2>
+        <button class="btn-cerrar-modal" onclick="cerrarModalReserva()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <form id="formulario-reserva" onsubmit="enviarReserva(event)">
+        <div class="form-group">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="telefono">Teléfono</label>
+          <input type="tel" id="telefono" name="telefono" required>
+        </div>
+        <div class="form-group">
+          <label for="fecha">Fecha de la actividad</label>
+          <input type="date" id="fecha" name="fecha" required>
+        </div>
+        <div class="form-group">
+          <label for="participantes">Número de participantes</label>
+          <input type="number" id="participantes" name="participantes" min="1" max="10" required>
+        </div>
+        <div class="form-group">
+          <label for="comentarios">Comentarios adicionales</label>
+          <textarea id="comentarios" name="comentarios" rows="3"></textarea>
+        </div>
+        <div class="form-buttons">
+          <button type="button" class="btn-cancelar" onclick="cerrarModalReserva()">Cancelar</button>
+          <button type="submit" class="btn-reservar">Confirmar Reserva</button>
+        </div>
+      </form>
+    </div>
   </div>
 
-  <div id="carrito">
-    <h2>Tu carrito de compras:</h2>
-    <p id="carrito-vacio">Tu carrito está vacío.</p>
-    <ul id="lista-carrito"></ul>
-    <p id="total-carrito">Total: $0</p>
+  <!-- Modal de Detalles de Actividad -->
+  <div id="modal-detalles" class="modal">
+    <div class="modal-content modal-detalles">
+      <div class="modal-header">
+        <h2 id="detalle-titulo"></h2>
+        <button class="btn-cerrar-modal" onclick="cerrarModalDetalles()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="detalles-content">
+        <div class="detalles-imagen">
+          <img id="detalle-imagen" src="" alt="">
+        </div>
+        <div class="detalles-info">
+          <p id="detalle-descripcion"></p>
+          <div class="detalles-meta">
+            <div class="meta-item">
+              <i class="far fa-clock"></i>
+              <span id="detalle-duracion"></span>
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-users"></i>
+              <span id="detalle-participantes"></span>
+            </div>
+            <div class="meta-item">
+              <i class="far fa-calendar-alt"></i>
+              <span id="detalle-fecha"></span>
+            </div>
+            <div class="meta-item">
+              <i class="far fa-clock"></i>
+              <span id="detalle-hora"></span>
+            </div>
+          </div>
+          <button class="btn-reservar-detalles" onclick="abrirModalReservaDesdeDetalles()">Reservar ahora</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
