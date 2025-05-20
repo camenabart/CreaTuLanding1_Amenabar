@@ -1182,6 +1182,36 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 768px) {
+  .actividades {
+    padding: 2rem 1rem;
+  }
+
+  .actividades h2 {
+    font-size: 1.2rem !important;
+    margin-bottom: 2rem;
+  }
+
+  .actividad-info h3 {
+    font-size: 0.9rem !important;
+  }
+
+  .actividad-info p {
+    font-size: 0.8rem !important;
+  }
+
+  .actividad-detalles {
+    font-size: 0.75rem !important;
+  }
+
+  .actividad-fecha span {
+    font-size: 0.75rem !important;
+  }
+
+  .btn-ver-mas, .btn-actividad {
+    font-size: 0.8rem !important;
+    padding: 0.6rem;
+  }
+
   .detalles-content {
     grid-template-columns: 1fr;
   }
@@ -1326,7 +1356,6 @@ html {
   
   .carousel-container {
     padding: 0 30px;
-    max-width: 100%;
   }
 
   .carousel-wrapper {
