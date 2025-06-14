@@ -10,11 +10,25 @@ function Flor(id, nombre, precio, imagen) {
 const floresGuardadas = JSON.parse(localStorage.getItem("flores"));
 const flores = floresGuardadas || [
   new Flor(1, "Rosas Rojas", 5000, "img/rosas.jpg"),
-  new Flor(2, "Tulipanes", 4500, "img/tulipanes.jpg"),
-  new Flor(3, "Lirios", 4000, "img/Lirios.jpg"),
-  new Flor(4, "Margaritas", 3000, "img/Margaritas.jpg"),
-  new Flor(5, "Hortencias", 3500, "img/ortencias.jpg"),
-  new Flor(6, "Dalias", 6000, "img/dalias.jpg"),
+  new Flor(2, "Tulipanes", 4500, "img/rosas.jpg"),
+  new Flor(3, "Lirios", 4000, "img/rosas.jpg"),
+  new Flor(4, "Margaritas", 3000, "img/rosas.jpg"),
+  new Flor(5, "Hortencias", 3500, "img/rosas.jpg"),
+  new Flor(6, "Dalias", 6000, "img/rosas.jpg"),
+  new Flor(7, "Girasoles", 3500, "img/rosas.jpg"),
+  new Flor(8, "Orquídeas", 8000, "img/rosas.jpg"),
+  new Flor(9, "Crisantemos", 2800, "img/rosas.jpg"),
+  new Flor(10, "Peonías", 7500, "img/rosas.jpg"),
+  new Flor(11, "Lavanda", 3200, "img/rosas.jpg"),
+  new Flor(12, "Gardenias", 4500, "img/rosas.jpg"),
+  new Flor(13, "Rosas Blancas", 4800, "img/rosas.jpg"),
+  new Flor(14, "Rosas Rosadas", 5200, "img/rosas.jpg"),
+  new Flor(15, "Calas", 5500, "img/rosas.jpg"),
+  new Flor(16, "Aster", 3800, "img/rosas.jpg"),
+  new Flor(17, "Claveles", 2500, "img/rosas.jpg"),
+  new Flor(18, "Gladiolos", 4200, "img/rosas.jpg"),
+  new Flor(19, "Iris", 4800, "img/rosas.jpg"),
+  new Flor(20, "Narcisos", 3500, "img/rosas.jpg")
 ];
 
 // Carrito (intenta cargar de localStorage)
@@ -123,21 +137,27 @@ function filtrarPorCategoria(categoria) {
   }
 }
 
-// === Agregar al carrito ===
+// === Funciones mejoradas del carrito ===
 function agregarAlCarrito(id) {
   const flor = flores.find((f) => f.id === id);
   const itemEnCarrito = carrito.find((item) => item.id === id);
 
   if (itemEnCarrito) {
     itemEnCarrito.cantidad = (itemEnCarrito.cantidad || 1) + 1;
+    mostrarMensajeCarrito(`Aumentaste la cantidad de "${flor.nombre}" en el carrito.`);
   } else {
     carrito.push({ ...flor, cantidad: 1 });
+    mostrarMensajeCarrito(`Agregaste "${flor.nombre}" al carrito.`);
   }
+
+  // Animación del carrito
+  const carritoIcon = document.querySelector('.carrito-icon');
+  carritoIcon.classList.add('animado');
+  setTimeout(() => carritoIcon.classList.remove('animado'), 500);
 
   guardarCarrito();
   mostrarCarrito();
   actualizarContadorCarrito();
-  mostrarMensajeCarrito(`Agregaste "${flor.nombre}" al carrito.`);
 }
 
 // === Mostrar carrito ===
@@ -159,6 +179,10 @@ function mostrarCarrito() {
 
   carritoVacio.style.display = "none";
   btnPagar.style.display = "flex";
+  
+  // Ordenar carrito por nombre
+  carrito.sort((a, b) => a.nombre.localeCompare(b.nombre));
+  
   carrito.forEach((item) => {
     const li = document.createElement("li");
     li.className = "item-carrito";
@@ -167,24 +191,37 @@ function mostrarCarrito() {
     const subtotal = item.precio * cantidad;
     
     li.innerHTML = `
-      <span class="item-nombre">${item.nombre}</span>
-      <span class="item-cantidad">x${cantidad}</span>
-      <span class="item-precio">$${formatearPrecio(subtotal)}</span>
-      <div class="item-controles">
-        <button onclick="cambiarCantidad(${item.id}, ${cantidad - 1})" class="btn-cantidad">-</button>
-        <button onclick="cambiarCantidad(${item.id}, ${cantidad + 1})" class="btn-cantidad">+</button>
-        <button onclick="eliminarDelCarrito(${item.id})" class="btn-eliminar">🗑️</button>
+      <div class="item-info">
+        <img src="${item.imagen}" alt="${item.nombre}" class="item-imagen" />
+        <span class="item-nombre">${item.nombre}</span>
+      </div>
+      <div class="item-detalles">
+        <span class="item-precio-unitario">$${formatearPrecio(item.precio)} c/u</span>
+        <div class="item-controles">
+          <button onclick="cambiarCantidad(${item.id}, ${cantidad - 1})" class="btn-cantidad" aria-label="Disminuir cantidad">-</button>
+          <span class="item-cantidad">${cantidad}</span>
+          <button onclick="cambiarCantidad(${item.id}, ${cantidad + 1})" class="btn-cantidad" aria-label="Aumentar cantidad">+</button>
+        </div>
+        <span class="item-subtotal">$${formatearPrecio(subtotal)}</span>
+        <button onclick="eliminarDelCarrito(${item.id})" class="btn-eliminar" aria-label="Eliminar producto">🗑️</button>
       </div>
     `;
     listaCarrito.appendChild(li);
   });
 
   const total = carrito.reduce((acc, item) => acc + (item.precio * (item.cantidad || 1)), 0);
-  totalCarrito.textContent = `Total: $${formatearPrecio(total)}`;
+  const descuento = localStorage.getItem('descuentoAplicado') ? 0.1 : 0;
+  const totalConDescuento = total * (1 - descuento);
+  
+  totalCarrito.innerHTML = `
+    ${descuento > 0 ? `<span class="precio-original">$${formatearPrecio(total)}</span>` : ''}
+    <span class="precio-final">Total: $${formatearPrecio(totalConDescuento)}</span>
+    ${descuento > 0 ? `<span class="descuento-aplicado">¡10% de descuento aplicado!</span>` : ''}
+  `;
+  
   actualizarContadorCarrito();
 }
 
-// === Funciones adicionales del carrito ===
 function cambiarCantidad(id, nuevaCantidad) {
   if (nuevaCantidad < 1) {
     eliminarDelCarrito(id);
@@ -193,26 +230,44 @@ function cambiarCantidad(id, nuevaCantidad) {
 
   const item = carrito.find((item) => item.id === id);
   if (item) {
+    const cantidadAnterior = item.cantidad;
     item.cantidad = nuevaCantidad;
+    
     guardarCarrito();
     mostrarCarrito();
+    
+    if (nuevaCantidad > cantidadAnterior) {
+      mostrarMensajeCarrito(`Aumentaste la cantidad de "${item.nombre}" a ${nuevaCantidad}`);
+    } else {
+      mostrarMensajeCarrito(`Disminuiste la cantidad de "${item.nombre}" a ${nuevaCantidad}`);
+    }
   }
 }
 
 function eliminarDelCarrito(id) {
-  carrito = carrito.filter((item) => item.id !== id);
-  guardarCarrito();
-  mostrarCarrito();
-  actualizarContadorCarrito();
-  mostrarMensajeCarrito("Producto eliminado del carrito", "red");
+  const item = carrito.find((item) => item.id === id);
+  if (item) {
+    carrito = carrito.filter((item) => item.id !== id);
+    guardarCarrito();
+    mostrarCarrito();
+    actualizarContadorCarrito();
+    mostrarMensajeCarrito(`Eliminaste "${item.nombre}" del carrito`, "red");
+  }
 }
 
 function vaciarCarrito() {
-  carrito = [];
-  guardarCarrito();
-  mostrarCarrito();
-  actualizarContadorCarrito();
-  mostrarMensajeCarrito("Carrito vaciado", "red");
+  if (carrito.length === 0) {
+    mostrarMensajeCarrito("El carrito ya está vacío", "orange");
+    return;
+  }
+  
+  if (confirm("¿Estás seguro de que deseas vaciar el carrito?")) {
+    carrito = [];
+    guardarCarrito();
+    mostrarCarrito();
+    actualizarContadorCarrito();
+    mostrarMensajeCarrito("Carrito vaciado", "red");
+  }
 }
 
 // === Mostrar mensajes ===
@@ -240,6 +295,11 @@ function aplicarDescuento() {
     return;
   }
 
+  if (localStorage.getItem('descuentoAplicado')) {
+    mostrarMensajeCarrito("Ya tienes un descuento aplicado", "orange");
+    return;
+  }
+
   const codigoIngresado = prompt("Ingresa el código de descuento:");
   
   if (!codigoIngresado) {
@@ -248,12 +308,7 @@ function aplicarDescuento() {
   }
 
   if (codigoIngresado.toUpperCase() === CODIGO_DESCUENTO) {
-    carrito = carrito.map((item) => ({
-      ...item,
-      precio: Math.round(item.precio * 0.9),
-    }));
-
-    guardarCarrito();
+    localStorage.setItem('descuentoAplicado', 'true');
     mostrarCarrito();
     mostrarMensajeCarrito("¡Descuento aplicado con éxito!");
   } else {
@@ -277,11 +332,21 @@ function irAPagar() {
   }
 
   const total = carrito.reduce((acc, item) => acc + (item.precio * (item.cantidad || 1)), 0);
-  const mensaje = `Total a pagar: $${total}\n\n¿Deseas proceder con el pago?`;
+  const descuento = localStorage.getItem('descuentoAplicado') ? 0.1 : 0;
+  const totalConDescuento = total * (1 - descuento);
+  
+  const mensaje = `
+    Resumen de tu compra:
+    ${carrito.map(item => `- ${item.nombre} x${item.cantidad}: $${formatearPrecio(item.precio * item.cantidad)}`).join('\n')}
+    ${descuento > 0 ? `\nDescuento aplicado: 10%\nSubtotal: $${formatearPrecio(total)}` : ''}
+    Total a pagar: $${formatearPrecio(totalConDescuento)}
+    
+    ¿Deseas proceder con el pago?
+  `;
   
   if (confirm(mensaje)) {
-    // Aquí iría la lógica de pago
     mostrarMensajeCarrito("¡Gracias por tu compra! Te contactaremos pronto.", "green");
+    localStorage.removeItem('descuentoAplicado');
     vaciarCarrito();
   }
 }
@@ -300,8 +365,7 @@ function toggleMenu() {
 }
 
 function toggleCarrito() {
-  const carrito = document.getElementById('carrito');
-  carrito.classList.toggle('activo');
+  window.location.href = 'carrito.html';
 }
 
 // Cerrar menús al hacer clic fuera
